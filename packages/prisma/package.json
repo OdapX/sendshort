@@ -1,0 +1,24 @@
+{
+  "name": "@sendshorts/prisma",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.ts",
+  "private": "true",
+  "scripts": {
+    "prisma:generate": "dotenv -e ../../.env.local -- prisma generate",
+    "prisma:push": "dotenv -e ../../.env.local -- prisma db push --skip-generate",
+    "prisma:migrate:dev": "dotenv -e ../../.env.local -- prisma migrate dev",
+    "prisma:migrate:prod": "dotenv -e ../../.env.local -- prisma migrate deploy",
+    "prisma:migrate:diff": "dotenv -e ../../.env.local -- prisma migrate diff --from-empty --to-schema-datamodel ./schema.prisma --script",
+    "prisma:pull": "dotenv -e ../../.env.local -- prisma db pull",
+    "prisma": "dotenv -e ../../.env.local -- prisma"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prisma": "^6.13.0"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.13.0"
+  }
+}

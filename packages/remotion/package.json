@@ -1,0 +1,52 @@
+{
+  "name": "@sendshorts/remotion",
+  "version": "0.0.0",
+  "repository": {},
+  "license": "UNLICENSED",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@remotion/bundler": "^4.0.331",
+    "@remotion/cli": "^4.0.318",
+    "@remotion/eslint-config-flat": "^4.0.318",
+    "@remotion/fonts": "^4.0.318",
+    "@remotion/google-fonts": "^4.0.331",
+    "@remotion/layout-utils": "^4.0.331",
+    "@remotion/media-parser": "^4.0.318",
+    "@remotion/player": "^4.0.318",
+    "@remotion/renderer": "^4.0.318",
+    "@remotion/transitions": "^4.0.318",
+    "@remotion/zod-types": "^4.0.323",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "remotion": "^4.0.318",
+    "tailwindcss": "^3.4.1",
+    "zod": "3.22.3"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.330",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/web": "0.0.166",
+    "eslint": "9.19.0",
+    "prettier": "3.6.0",
+    "typescript": "5.8.2"
+  },
+  "exports": {
+    "./player": "./src/components/Player.tsx",
+    "./Ugc": "./src/components/Ugc.tsx",
+    "./available-fonts": "./src/utils/available-fonts.ts",
+    "./available-transitons": "./src/utils/available-transitons.ts",
+    "./config": "./src/utils/config.ts",
+    "./render-video": "./src/utils/render-video.ts"
+  },
+  "scripts": {
+    "studio": "remotion studio",
+    "build": "remotion bundle",
+    "upgrade": "remotion upgrade",
+    "lint": "eslint src && tsc"
+  },
+  "sideEffects": [
+    "*.css"
+  ]
+}

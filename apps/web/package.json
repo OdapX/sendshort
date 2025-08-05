@@ -1,0 +1,41 @@
+{
+  "name": "web",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dotenv -- next dev --turbopack --port 3000",
+    "build": "next build",
+    "start": "next start",
+    "dotenv": "dotenv -e ../../.env.local",
+    "lint": "next lint --max-warnings 0",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@sendshorts/remotion": "workspace:*",
+    "@sendshorts/shared": "workspace:*",
+    "@sendshorts/ui": "workspace:*",
+    "@tailwindcss/postcss": "^4.1.11",
+    "dotenv-cli": "^10.0.0",
+    "lucide-react": "^0.536.0",
+    "next": "^15.4.2",
+    "react": "^19.0.0",
+    "react-colorful": "^5.6.1",
+    "react-dom": "^19.0.0",
+    "react-dropzone": "^14.3.8",
+    "zod": "3.22.3",
+    "zustand": "^5.0.7"
+  },
+  "devDependencies": {
+    "@sendshorts/eslint-config": "workspace:*",
+    "@sendshorts/typescript-config": "workspace:*",
+    "@types/node": "^22.15.3",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.31.0",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "5.8.2"
+  }
+}

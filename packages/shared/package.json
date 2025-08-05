@@ -1,0 +1,29 @@
+{
+  "name": "@sendshorts/shared",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "generate:component": "turbo gen react-component",
+    "check-types": "tsc --noEmit"
+  },
+  "exports": {
+    "./mux": "./mux.ts",
+    "./openai": "./openai.ts",
+    "./get-video-duration": "./get-video-duration.ts"
+  },
+  "devDependencies": {
+    "@sendshorts/eslint-config": "workspace:*",
+    "@sendshorts/typescript-config": "workspace:*",
+    "@turbo/gen": "^2.5.0",
+    "@types/node": "^22.15.3",
+    "eslint": "^9.29.0",
+    "typescript": "5.8.2"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.859.0",
+    "@mux/mux-node": "^12.3.0",
+    "openai": "^5.1.1",
+    "server-only": "^0.0.1"
+  }
+}
