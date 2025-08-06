@@ -1,23 +1,35 @@
 {
   "name": "api",
-  "type": "module",
+  "main": "index.ts",
   "scripts": {
-    "dev": "npm run dotenv -- tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "dotenv": "dotenv -e ../../.env.local"
+    "dev": "npm run dotenv -- cross-env NODE_PATH=. tsx watch --require dotenv/config index.ts",
+    "start": "npm run dotenv -- cross-env NODE_PATH=dist node dist/index.js",
+    "build": "tsup",
+    "dotenv": "dotenv -e ../../.env.local",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist && rm *.tsbuildinfo",
+    "test": "jest --setupFiles dotenv/config",
+    "lint": "eslint . --quiet"
   },
   "dependencies": {
-    "@hono/node-server": "^1.18.1",
     "@sendshorts/shared": "workspace:*",
+    "@sendshorts/typescript-config": "workspace:*",
     "axios": "^1.11.0",
     "dotenv": "^17.2.1",
-    "hono": "^4.8.12"
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "tsup": "^8.5.0"
   },
   "devDependencies": {
+    "@swc/core": "^1.13.3",
+    "@swc/helpers": "^0.5.17",
+    "@types/express": "^5.0.3",
+    "@types/multer": "^2.0.0",
     "@types/node": "^20.11.17",
+    "cross-env": "^10.0.0",
     "dotenv-cli": "^10.0.0",
-    "tsx": "^4.7.1",
+    "regenerator-runtime": "^0.14.1",
+    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   }
 }

@@ -1,9 +1,12 @@
 version: "3.8"
 
 services:
-  db:
+  sendshort-db:
     image: postgres:15
     restart: always
+    env_file:
+      - path: ./.env.local
+        required: true
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -12,5 +15,6 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+
 volumes:
   pgdata:

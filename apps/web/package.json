@@ -12,10 +12,12 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
+    "@sendshorts/prisma": "workspace:*",
     "@sendshorts/remotion": "workspace:*",
     "@sendshorts/shared": "workspace:*",
     "@sendshorts/ui": "workspace:*",
     "@tailwindcss/postcss": "^4.1.11",
+    "cuid": "^3.0.0",
     "dotenv-cli": "^10.0.0",
     "lucide-react": "^0.536.0",
     "next": "^15.4.2",

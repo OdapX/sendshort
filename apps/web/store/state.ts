@@ -1,66 +1,19 @@
 import { create } from "zustand";
-import { z } from "zod";
-import { availableTransitions } from "@sendshorts/remotion/available-transitons";
-
-const segmentSchema = z.object({
-  start: z.number(),
-  end: z.number(),
-  text: z.string(),
-});
-
-const wordSchema = z.object({
-  start: z.number(),
-  end: z.number(),
-  text: z.string(),
-});
-
-const transcriptionSchema = z.object({
-  segments: z.array(segmentSchema),
-  words: z.array(wordSchema),
-});
-
-const textStyleSchema = z.object({
-  fontFamily: z.string(),
-  size: z.number(),
-  color: z.string(),
-  vertical_position: z.number(),
-  horizontal_position: z.number(),
-});
-
-const hookSchema = z
-  .object({
-    text: z.string(),
-    ugc_url: z.string().url(),
-  })
-  .merge(textStyleSchema);
-
-const footageSchema = z.object({
-  file: z.instanceof(File).or(z.undefined()),
-  transition: z.enum(availableTransitions),
-  transitionDuration: z.number(),
-  durationInFrames: z.number(),
-});
-
-const captionsSchema = z
-  .object({
-    template: z.string(),
-    transcription: transcriptionSchema.or(z.undefined()),
-  })
-  .merge(textStyleSchema);
-
-const uiSchema = z.object({
-  activeTab: z.enum(["hook", "footage", "captions"]),
-});
-
-type HookData = z.infer<typeof hookSchema>;
-type FootageData = z.infer<typeof footageSchema>;
-type CaptionsData = z.infer<typeof captionsSchema>;
-type UiData = z.infer<typeof uiSchema>;
+import {
+  CaptionsData,
+  captionsSchema,
+  FootageData,
+  footageSchema,
+  HookData,
+  hookSchema,
+  UiData,
+  uiSchema,
+} from "../dtos";
 
 type StateStore = {
   ui: {
     data: UiData;
-    setActiveTab: (tab: UiData["activeTab"]) => void;
+    updateField: <K extends keyof UiData>(key: K, value: UiData[K]) => void;
   };
   hook: {
     data: HookData;
@@ -86,17 +39,26 @@ export const useStateStore = create<StateStore>((set) => ({
   ui: {
     data: {
       activeTab: "hook",
+      renderProgress: 0,
+      renderStatus: "idle",
     },
-    setActiveTab: (tab) => {
-      set((state) => ({
-        ui: {
-          ...state.ui,
-          data: {
-            ...state.ui.data,
-            activeTab: tab,
+    updateField: (key, value) => {
+      const validator = uiSchema.shape[key];
+      const result = validator.safeParse(value);
+
+      if (result.success) {
+        set((state) => ({
+          ui: {
+            ...state.ui,
+            data: {
+              ...state.ui.data,
+              [key]: value,
+            },
           },
-        },
-      }));
+        }));
+      } else {
+        throw new Error(`Validation error: ui.${key}`, result.error);
+      }
     },
   },
   hook: {
@@ -137,7 +99,6 @@ export const useStateStore = create<StateStore>((set) => ({
       durationInFrames: 60,
       transitionDuration: 5,
     },
-    status: "idle",
     updateField: (key, value) => {
       const validator = footageSchema.shape[key];
       const result = validator.safeParse(value);
@@ -160,14 +121,13 @@ export const useStateStore = create<StateStore>((set) => ({
 
   captions: {
     data: {
-      template: "",
+      template: "segment_word_background",
       fontFamily: "Poppins",
       color: "#000000",
       vertical_position: 0,
       horizontal_position: 0,
       size: 35,
     },
-    status: "idle",
     updateField: (key, value) => {
       const validator = captionsSchema.shape[key];
       const result = validator.safeParse(value);

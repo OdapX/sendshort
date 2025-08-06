@@ -2,7 +2,6 @@ import { AbsoluteFill, OffthreadVideo } from "remotion";
 import { TransitionSeries } from "@remotion/transitions";
 import { linearTiming } from "@remotion/transitions";
 import { z } from "zod";
-import { useEffect } from "react";
 import { availableTransitions } from "../utils/available-transitons";
 import { presentationMapper } from "../utils/presentationMapper";
 import {
@@ -10,9 +9,9 @@ import {
   VIDEO_HEIGHT,
   VIDEO_WIDTH,
 } from "../utils/config";
-import { loadGoogleFont } from "../utils/load-google-font";
-import WordBackgroundCaptions from "./Captions/WordBackground";
 import { transcriptionSchema } from "./Captions/schemas";
+import CaptionRenderer from "./Captions/CaptionRenderer";
+import { CAPTION_TEMPLATES } from "../utils/available-caption-templates";
 
 const textStyleSchema = z.object({
   fontFamily: z.string(),
@@ -32,14 +31,14 @@ export const ugcSchema = z.object({
     })
     .merge(textStyleSchema),
   footage: z.object({
-    videoUrl: z.string().url().optional(),
+    footageUrl: z.string().url().optional(),
     transition: z.enum(availableTransitions),
     transitionDuration: z.number(),
     durationInFrames: z.number(),
   }),
   captions: z
     .object({
-      template: z.string(),
+      template: z.enum(CAPTION_TEMPLATES),
       transcription: transcriptionSchema.or(z.undefined()),
     })
     .merge(textStyleSchema),
@@ -48,17 +47,6 @@ export const ugcSchema = z.object({
 export type UgcProps = z.infer<typeof ugcSchema>;
 
 export default function Ugc(props: UgcProps) {
-  useEffect(() => {
-    const fontLoadCalls = [
-      props.hook.fontFamily,
-      props.captions.fontFamily,
-    ].map((font) => loadGoogleFont(font));
-
-    (async () => {
-      await Promise.all(fontLoadCalls);
-    })();
-  }, [props.hook.fontFamily, props.captions.fontFamily]);
-
   return (
     <AbsoluteFill>
       <TransitionSeries>
@@ -100,17 +88,19 @@ export default function Ugc(props: UgcProps) {
         <TransitionSeries.Sequence
           durationInFrames={props.footage.durationInFrames}
         >
-          {props.footage.videoUrl ? (
+          {props.footage.footageUrl ? (
             <AbsoluteFill>
-              <OffthreadVideo src={props.footage.videoUrl} />
+              <OffthreadVideo src={props.footage.footageUrl} />
+
               {props.captions.transcription && (
-                <WordBackgroundCaptions
+                <CaptionRenderer
+                  template={props.captions.template}
                   transcription={props.captions.transcription}
                   fontFamily={props.captions.fontFamily}
-                  verticalPostion={props.captions.vertical_position}
-                  horizontalPosition={props.captions.horizontal_position}
-                  fontSize={props.captions.size}
                   color={props.captions.color}
+                  fontSize={props.captions.size}
+                  verticalPosition={props.captions.vertical_position}
+                  horizontalPosition={props.captions.horizontal_position}
                 />
               )}
             </AbsoluteFill>
@@ -126,7 +116,7 @@ export default function Ugc(props: UgcProps) {
                 color: "white",
               }}
             >
-              Your Footage Will Go Here.
+              Your Footage Will Appear Here.
             </AbsoluteFill>
           )}
         </TransitionSeries.Sequence>

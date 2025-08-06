@@ -1,5 +1,3 @@
-import { continueRender, delayRender } from "remotion";
-
 const loadedFonts: Record<string, boolean> = {};
 
 export const loadGoogleFont = async (
@@ -12,7 +10,6 @@ export const loadGoogleFont = async (
 
   if (loadedFonts[family]) return;
 
-  const handle = delayRender();
   loadedFonts[family] = true;
 
   try {
@@ -33,6 +30,5 @@ export const loadGoogleFont = async (
   } catch (e) {
     console.log("font issue", e);
   } finally {
-    continueRender(handle);
   }
 };

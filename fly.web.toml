@@ -1,0 +1,33 @@
+# fly.toml app configuration file generated for sendshort-web on 2025-08-06T01:35:13+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'sendshort-web'
+primary_region = 'fra'
+kill_signal = 'SIGINT'
+kill_timeout = '5s'
+
+[build]
+
+[env]
+  PORT = '8080'
+
+[processes]
+  web = 'node apps/web/server.js'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  processes = ['web']
+
+  [http_service.concurrency]
+    type = 'requests'
+    soft_limit = 500
+
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1

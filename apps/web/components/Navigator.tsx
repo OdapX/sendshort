@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@sendshorts/ui/button";
 import { Captions, Lightbulb, Video } from "lucide-react";
 import { useStateStore } from "../store/state";
@@ -11,7 +12,7 @@ const tabs = [
 
 export default function Navigator() {
   const activeTab = useStateStore((state) => state.ui.data.activeTab);
-  const setActiveTab = useStateStore((state) => state.ui.setActiveTab);
+  const updateField = useStateStore((state) => state.ui.updateField);
 
   const handleTabChange = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -19,9 +20,9 @@ export default function Navigator() {
         | "hook"
         | "footage"
         | "captions";
-      setActiveTab(tabName);
+      updateField("activeTab", tabName);
     },
-    [setActiveTab]
+    [updateField]
   );
 
   return (

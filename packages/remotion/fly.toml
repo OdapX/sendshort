@@ -1,0 +1,23 @@
+# fly.toml app configuration file generated for sendshort-renderer on 2025-08-06T02:39:11+01:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'sendshort-renderer'
+primary_region = 'fra'
+
+[build]
+  dockerfile = 'Dockerfile'
+
+[env]
+  NODE_ENV = 'production'
+
+[http_service]
+  internal_port = 3001
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  processes = ['app']
+
+[[vm]]
+  size = 'performance-4x'

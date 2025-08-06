@@ -1,32 +1,20 @@
 "use server";
-import { openai } from "@sendshorts/shared/openai";
-import { uploadFileToMux } from "./mux-upload";
 
 export async function generateCaptions(file: File) {
-  const { playbackId } = await uploadFileToMux(file);
+  const formData = new FormData();
+  formData.append("file", file);
 
-  const transcription = await openai.audio.transcriptions.create({
-    file: file,
-    model: "whisper-1",
-    language: "en",
-    response_format: "verbose_json",
-    timestamp_granularities: ["word", "segment"],
+  const res = await fetch(`${process.env.API_URL!}/transcribe`, {
+    method: "POST",
+    body: formData,
   });
 
-  if (!transcription?.segments || !transcription.words) {
-    throw new Error("No Audio Was Found");
+  if (!res.ok) {
+    throw new Error("Failed to upload file");
   }
 
-  return {
-    segments: transcription.segments.map((s) => ({
-      start: s.start,
-      end: s.end,
-      text: s.text,
-    })),
-    words: transcription.words.map((s) => ({
-      start: s.start,
-      end: s.end,
-      text: s.word,
-    })),
-  };
+  const { segments, words } = await res.json();
+  console.log("received ", { segments, words });
+
+  return { segments, words };
 }

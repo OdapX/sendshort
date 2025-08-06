@@ -4,7 +4,10 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "scaffold": "docker-compose up -d && cd packages/remotion && docker compose up -d",
     "lint": "turbo run lint",
+    "fly:deploy:web": "flyctl deploy --build-arg TARGET=web --remote-only --config fly.web.toml --dockerfile ./Dockerfile.web",
+    "fly:deploy:api": "flyctl deploy --build-arg TARGET=api --remote-only --config fly.api.toml --dockerfile ./Dockerfile.api",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
   },

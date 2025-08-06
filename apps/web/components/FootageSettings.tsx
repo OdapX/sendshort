@@ -20,8 +20,8 @@ import { availableTransitions } from "@sendshorts/remotion/available-transitons"
 import { FPS } from "@sendshorts/remotion/config";
 import { Slider } from "@sendshorts/ui/slider";
 
-// 100 MB
-const MAX_FILE_SIZE = 100000000;
+// 100MB
+const MAX_FILE_SIZE = 100 * 1024 * 1024;
 
 const MIN_TRANSITION_DURATION_IN_FRAMES = 2;
 const MAX_TRANSITION_DURATION_IN_FRAMES = 30;
@@ -31,19 +31,27 @@ export default function FootageSettings() {
   const updateFootageField = useStateStore(
     (state) => state.footage.updateField
   );
+  const updateCaptionsField = useStateStore(
+    (state) => state.captions.updateField
+  );
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
-      const duration = await getVideoDuration(acceptedFiles[0]!);
-      updateFootageField("durationInFrames", Math.ceil(duration * FPS));
-      updateFootageField("file", acceptedFiles[0]);
+      if (!acceptedFiles[0]) {
+        toast.error("File too large");
+      } else {
+        const duration = await getVideoDuration(acceptedFiles[0]!);
+        updateFootageField("durationInFrames", Math.ceil(duration * FPS));
+        updateFootageField("file", acceptedFiles[0]);
+      }
     },
     [updateFootageField]
   );
 
   const resetFootage = useCallback(() => {
     updateFootageField("file", undefined);
-  }, [updateFootageField]);
+    updateCaptionsField("transcription", undefined);
+  }, [updateFootageField, updateCaptionsField]);
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -59,7 +67,6 @@ export default function FootageSettings() {
       }
     },
     multiple: false,
-    // 100MB
     maxSize: MAX_FILE_SIZE,
     accept: {
       video: [".mp4", ".webm"],

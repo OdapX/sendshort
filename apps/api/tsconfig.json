@@ -1,14 +1,15 @@
 {
+  "extends": "@sendshorts/typescript-config/base.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "node20",
-    "strict": true,
-    "verbatimModuleSyntax": true,
-    "skipLibCheck": true,
-    "types": ["node"],
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx",
-    "outDir": "./dist"
+    "baseUrl": ".",
+    "jsx": "react",
+    "outDir": "dist",
+    "tsBuildInfoFile": "tsconfig.tsbuildinfo"
   },
-  "exclude": ["node_modules"]
+  "include": ["."],
+  "exclude": ["dist", "build"],
+  "ts-node": {
+    "swc": true,
+    "transpileOnly": true
+  }
 }

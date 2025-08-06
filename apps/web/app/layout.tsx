@@ -1,4 +1,7 @@
+"use client";
 import "@sendshorts/ui/globals.css";
+import { LocalVideoSync } from "../components/LocalVideoSync";
+import { Toaster as Sonner } from "@sendshorts/ui/sonner";
 
 export default function RootLayout({
   children,
@@ -7,7 +10,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <LocalVideoSync />
+        <Sonner />
+        {children}
+      </body>
     </html>
   );
 }

@@ -18,10 +18,21 @@ import {
 import { Slider } from "@sendshorts/ui/slider";
 
 const availableFonts = [
-  "AbyssinicaSIL",
+  "Montserrat",
+  "Roboto",
+  "Roboto Condensed",
+  "Open Sans",
   "Poppins",
-  "Abril Fatface",
-  "DefinitelyNotAFont123",
+  "Bangers",
+  "Gilroy",
+  "Rubik",
+  "Cairo",
+  "Gotham",
+  "Made Evolve Sans",
+  "Komika",
+  "Franklin Gothic",
+  "Campton",
+  "Robuck",
 ];
 
 const HORIZONTAL_BUFFER = 50;
@@ -58,7 +69,14 @@ export const TextStyleEditor: React.FC<TextStyleEditorProps> = ({
             </SelectTrigger>
             <SelectContent>
               {availableFonts.map((fontFamily) => (
-                <SelectItem key={fontFamily} value={fontFamily}>
+                <SelectItem
+                  key={fontFamily}
+                  value={fontFamily}
+                  style={{
+                    fontFamily,
+                    fontWeight: "bold",
+                  }}
+                >
                   {fontFamily}
                 </SelectItem>
               ))}

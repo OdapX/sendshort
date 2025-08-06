@@ -1,6 +1,5 @@
 import { bundle } from "@remotion/bundler";
 import { renderMedia, selectComposition } from "@remotion/renderer";
-// import fs from "fs/promises";
 import path from "path";
 import os from "os";
 import { dirname, resolve } from "node:path";
@@ -11,8 +10,6 @@ const __dirname = dirname(__filename);
 
 const OUTPUT_PATH = path.join(os.tmpdir(), "output.mp4");
 const entryPoint = resolve(__dirname, "../../src/index.ts");
-
-// let lastLogged = Date.now();
 
 let bundled: string | null = null;
 
@@ -85,7 +82,6 @@ export const renderVideo = async ({
     inputProps,
   });
 
-  console.log("render media call");
   await renderMedia({
     codec: "h264",
     composition,
@@ -97,11 +93,8 @@ export const renderVideo = async ({
     },
     inputProps,
   });
-  // const fileBuffer = await fs.readFile(OUTPUT_PATH);
 
   console.log("output file", OUTPUT_PATH);
-
-  //   await fs.unlink(OUTPUT_PATH);
 
   return;
 };

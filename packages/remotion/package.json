@@ -6,6 +6,8 @@
   "private": true,
   "type": "module",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.859.0",
+    "@hono/node-server": "^1.18.1",
     "@remotion/bundler": "^4.0.331",
     "@remotion/cli": "^4.0.318",
     "@remotion/eslint-config-flat": "^4.0.318",
@@ -17,6 +19,12 @@
     "@remotion/renderer": "^4.0.318",
     "@remotion/transitions": "^4.0.318",
     "@remotion/zod-types": "^4.0.323",
+    "@upstash/queue": "^1.0.1",
+    "cuid": "^3.0.0",
+    "dotenv": "^17.2.1",
+    "hono": "^4.8.12",
+    "ioredis": "^5.7.0",
+    "p-retry": "^6.2.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "remotion": "^4.0.318",
@@ -28,7 +36,9 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/web": "0.0.166",
+    "concurrently": "^9.2.0",
     "eslint": "9.19.0",
+    "nodemon": "^3.1.10",
     "prettier": "3.6.0",
     "typescript": "5.8.2"
   },
@@ -38,11 +48,13 @@
     "./available-fonts": "./src/utils/available-fonts.ts",
     "./available-transitons": "./src/utils/available-transitons.ts",
     "./config": "./src/utils/config.ts",
-    "./render-video": "./src/utils/render-video.ts"
+    "./render-video": "./src/utils/render-video.ts",
+    "./available-caption-templates": "./src/utils/available-caption-templates.ts"
   },
   "scripts": {
-    "studio": "remotion studio",
-    "build": "remotion bundle",
+    "launch": "concurrently --kill-others \"npm:dev:server\" \"npm:dev:worker\"",
+    "dev:server": "nodemon mock/server.mjs",
+    "dev:worker": "nodemon mock/worker.mjs",
     "upgrade": "remotion upgrade",
     "lint": "eslint src && tsc"
   },
