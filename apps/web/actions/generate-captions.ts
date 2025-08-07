@@ -14,7 +14,6 @@ export async function generateCaptions(file: File) {
   }
 
   const { segments, words } = await res.json();
-  console.log("received ", { segments, words });
 
   return { segments, words };
 }

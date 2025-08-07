@@ -23,7 +23,6 @@ export default function CaptionSettings() {
   const updateCaptionField = useStateStore(
     (state) => state.captions.updateField
   );
-  console.log("captioins...", captionData.transcription);
   const [selectedTab, setSelectedTab] = useState("templates");
   const handleTabChange = useCallback((v: string) => {
     setSelectedTab(v);

@@ -1,26 +1,28 @@
-# 1. Set your env vars for local dev:
+# Setup:
+
+## 1. Set your env vars for local dev:
 
     - at the root level .env.example => .env.local
 
     - at packages/remotion: .env.example => .env.local
 
-# 2. setup a local db, and remotion renderer:
+## 2. setup a local db, and remotion renderer:
 
     - pnpm scaffold
 
-# 3. sync the database:
+## 3. sync the database:
 
     - cd packages/prisma && pnpm prisma:push && pnpm prisma:generate
 
-# 3. Install dependencies at the root level: (move back to the root: cd ../..)
+## 4. Install dependencies at the root level: (move back to the root: cd ../..)
 
     - pnpm install
 
-# 4. Start the apps (web + api):
+# 5. Start the apps (web + api):
 
     - pnpm dev
 
-# Daily dev: (TODO: use concurrently to have one p dev)
+# Daily dev:
 
     - run remotion worker server: cd packages/remotion && docker compose up -d
     - pnpm dev

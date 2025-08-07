@@ -56,8 +56,6 @@ export const useStateStore = create<StateStore>((set) => ({
             },
           },
         }));
-      } else {
-        throw new Error(`Validation error: ui.${key}`, result.error);
       }
     },
   },
@@ -86,8 +84,6 @@ export const useStateStore = create<StateStore>((set) => ({
             },
           },
         }));
-      } else {
-        throw new Error(`Validation error: hook.${key}`, result.error);
       }
     },
   },
@@ -113,8 +109,6 @@ export const useStateStore = create<StateStore>((set) => ({
             },
           },
         }));
-      } else {
-        throw new Error(`Validation error: footage.${key}`, result.error);
       }
     },
   },
@@ -142,8 +136,6 @@ export const useStateStore = create<StateStore>((set) => ({
             },
           },
         }));
-      } else {
-        throw new Error(`Validation error: captions.${key}`, result.error);
       }
     },
   },
