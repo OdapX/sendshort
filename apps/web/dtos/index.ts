@@ -54,6 +54,9 @@ export const uiSchema = z.object({
   renderProgress: z.number(),
   videoUrl: z.string().url().or(z.undefined()),
   activeTab: z.enum(["hook", "footage", "captions"]),
+  playerRef: z.object({
+    current: z.any(),
+  }),
 });
 
 export const inputPropsSchema = z.object({

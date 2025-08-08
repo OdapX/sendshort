@@ -20,4 +20,4 @@ primary_region = 'fra'
   processes = ['app']
 
 [[vm]]
-  size = 'performance-4x'
+  size = 'performance-16x'

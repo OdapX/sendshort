@@ -1,13 +1,19 @@
-import { Composition } from "remotion";
-import Ugc, { ugcSchema } from "./components/Ugc";
-import { FPS } from "./utils/config";
+import { Composition, getInputProps } from "remotion";
+import Ugc, { UgcProps, ugcSchema } from "./components/Ugc";
+import { FPS, UGC_HOOK_DURATION_IN_FRAMES } from "./utils/config";
 
+const DEFAULT_EMPTY_FOOTAGE_DURATION = 5 * FPS;
 export const RemotionRoot: React.FC = () => {
+  const inputProps = getInputProps<UgcProps>();
+
   return (
     <Composition
       id="UgcVideo"
       component={Ugc}
-      durationInFrames={FPS * 10} // 10 seconds at 30fps
+      durationInFrames={
+        (inputProps.footage?.durationInFrames ||
+          DEFAULT_EMPTY_FOOTAGE_DURATION) + UGC_HOOK_DURATION_IN_FRAMES
+      }
       schema={ugcSchema}
       fps={FPS}
       width={1080}
@@ -29,7 +35,7 @@ export const RemotionRoot: React.FC = () => {
           durationInFrames: 60,
         },
         captions: {
-          template: "default",
+          template: "segment_word_background",
           fontFamily: "Arial",
           size: 32,
           color: "white",

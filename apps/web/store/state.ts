@@ -9,6 +9,8 @@ import {
   UiData,
   uiSchema,
 } from "../dtos";
+import { createRef } from "react";
+import { PlayerRef } from "@sendshorts/remotion/player";
 
 type StateStore = {
   ui: {
@@ -35,12 +37,15 @@ type StateStore = {
   };
 };
 
+const playerRef = createRef<PlayerRef>();
+
 export const useStateStore = create<StateStore>((set) => ({
   ui: {
     data: {
       activeTab: "hook",
       renderProgress: 0,
       renderStatus: "idle",
+      playerRef,
     },
     updateField: (key, value) => {
       const validator = uiSchema.shape[key];

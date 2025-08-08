@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone";
 import { Input } from "@sendshorts/ui/input";
 import { Separator } from "@sendshorts/ui/separator";
 import { CheckCircle, RotateCcw, Upload } from "lucide-react";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { toast } from "@sendshorts/ui/sonner";
 import { Button } from "@sendshorts/ui/button";
 import { useStateStore } from "../store/state";
@@ -31,6 +31,7 @@ export default function FootageSettings() {
   const updateFootageField = useStateStore(
     (state) => state.footage.updateField
   );
+  const playerRef = useStateStore((state) => state.ui.data.playerRef);
   const updateCaptionsField = useStateStore(
     (state) => state.captions.updateField
   );
@@ -72,6 +73,10 @@ export default function FootageSettings() {
       video: [".mp4", ".webm"],
     },
   });
+
+  useEffect(() => {
+    playerRef.current.seekTo(3 * FPS);
+  }, [footageData, playerRef]);
 
   return (
     <div className="space-y-4 px-2">

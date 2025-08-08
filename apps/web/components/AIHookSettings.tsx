@@ -4,7 +4,7 @@ import { Label } from "@sendshorts/ui/label";
 import { Separator } from "@sendshorts/ui/separator";
 import { useStateStore } from "../store/state";
 import Image from "next/image";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { TextStyleEditor } from "./TextStyleEditor";
 
 // mux playack ids for ai avatars.
@@ -24,6 +24,7 @@ const playbackIds = [
 export default function AIHookSettings() {
   const hookData = useStateStore((state) => state.hook.data);
   const updateHookField = useStateStore((state) => state.hook.updateField);
+  const playerRef = useStateStore((state) => state.ui.data.playerRef);
 
   const handleAvatarChange = useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
@@ -43,6 +44,10 @@ export default function AIHookSettings() {
     },
     [updateHookField]
   );
+
+  useEffect(() => {
+    playerRef.current.seekTo(0);
+  }, [hookData, playerRef]);
 
   return (
     <div className="space-y-4">

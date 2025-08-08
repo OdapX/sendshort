@@ -7,11 +7,8 @@ import { useIsMobile } from "@sendshorts/ui/hooks";
 import { FPS, UGC_HOOK_DURATION_IN_FRAMES } from "@sendshorts/remotion/config";
 import { useMemo } from "react";
 
-export default function Previewer({
-  playerRef,
-}: {
-  playerRef: React.RefObject<PlayerRef | null>;
-}) {
+export default function Previewer() {
+  const playerRef = useStateStore((state) => state.ui.data.playerRef);
   const hookData = useStateStore((state) => state.hook.data);
   const footageData = useStateStore((state) => state.footage.data);
   const captionsData = useStateStore((state) => state.captions.data);
@@ -25,7 +22,7 @@ export default function Previewer({
   return (
     <div className="relative">
       <Player
-        ref={playerRef}
+        ref={playerRef as any}
         component={Ugc}
         durationInFrames={totalVideoDuration}
         compositionWidth={1080}

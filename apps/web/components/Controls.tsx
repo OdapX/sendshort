@@ -1,14 +1,11 @@
 "use client";
 import React, { useState, useCallback } from "react";
 import { Play, Pause, Expand } from "lucide-react";
-import { PlayerRef } from "@sendshorts/remotion/player";
 import { Button } from "@sendshorts/ui/button";
+import { useStateStore } from "../store/state";
 
-interface VideoTimelineProps {
-  playerRef: React.RefObject<PlayerRef | null>;
-}
-
-const Controls: React.FC<VideoTimelineProps> = ({ playerRef }) => {
+const Controls: React.FC = () => {
+  const playerRef = useStateStore((state) => state.ui.data.playerRef);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const fullScreen = useCallback(() => {

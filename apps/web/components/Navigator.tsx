@@ -20,6 +20,7 @@ export default function Navigator() {
         | "hook"
         | "footage"
         | "captions";
+
       updateField("activeTab", tabName);
     },
     [updateField]
